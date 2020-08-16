@@ -1,0 +1,20 @@
+{
+  "name": "invoice-manager-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/app.js --exec babel-node --presets env",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "shubh",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "nodemon": "^2.0.4"
+  }
+}
