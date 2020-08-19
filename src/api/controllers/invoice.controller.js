@@ -20,6 +20,7 @@ exports.createInvoice = (req,res) => {
     //     rate: Joi.number().optional()
     // });
 
+
     if(!item || !date || !due || !qty){
         return res.status(httpStatus.BAD_REQUEST).json({
             err: 'Please fill all the required field'
