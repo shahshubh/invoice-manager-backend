@@ -3,7 +3,13 @@ const httpStatus = require('http-status-codes');
 const Invoice = require("../models/invoice");
 
 exports.findAllInvoices = (req,res) => {
-    Invoice.find()
+    const { page=1, perPage=10 } = req.query;
+    const options = {
+        page: parseInt(page),
+        limit: parseInt(perPage)
+    };
+
+    Invoice.paginate({}, options)
     .then(data => res.json(data))
     .catch(err => res.status(httpStatus.INTERNAL_SERVER_ERROR).json(err));
 };
