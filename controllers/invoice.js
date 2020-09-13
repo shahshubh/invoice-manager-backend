@@ -75,6 +75,7 @@ exports.updateInvoice = (req,res) => {
     }
 
     Invoice.findOneAndUpdate({ _id: id }, req.body, { new: true })
+    .populate('client')
     .then(data => res.json(data))
     .catch(err => res.status(httpStatus.INTERNAL_SERVER_ERROR).json(err));
 
