@@ -8,7 +8,7 @@ exports.sendEmail = (options) => {
             port: 587,
             auth: {
                 user: process.env.smtpUsername,
-                pass: process.env.smtpUsername
+                pass: process.env.smtpPassword
             }
         });
 
