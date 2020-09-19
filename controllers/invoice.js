@@ -39,7 +39,7 @@ exports.createInvoice = (req,res) => {
     // });
 
 
-    if(!item || !date || !due || !qty || !client){
+    if(!item || !date || !due || !qty || !client || !tax || !rate){
         return res.status(httpStatus.BAD_REQUEST).json({
             err: 'Please fill all the required field'
         });
@@ -68,7 +68,7 @@ exports.updateInvoice = (req,res) => {
     const { item, qty, date, due, tax, rate, client } = req.body;
     const {id} = req.params;
 
-    if((item === "") || ( date === "") || ( due === "") || (qty === "") || (client == "") ){
+    if((item === "") || ( date === "") || ( due === "") || (qty === "") || (client == "") || (tax == "") || (rate == "") ){
         return res.status(httpStatus.BAD_REQUEST).json({
             err: 'Please fill all the required field'
         });

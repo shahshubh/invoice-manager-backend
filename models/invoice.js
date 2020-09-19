@@ -21,9 +21,11 @@ const InvoiceSchema = new mongoose.Schema({
     },
     rate: {
         type: Number,
+        required: true,
     },
     tax: {
         type: Number,
+        required: true,
     },
     client: {
         ref: 'Client',
