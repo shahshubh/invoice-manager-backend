@@ -8,18 +8,20 @@ const cors = require('cors');
 const passport = require('passport');
 
 const router = require('./routes/index');
-const { devConfig } = require('./env');
 const { configureJWTStrategy } = require('./middlewares/passport');
+
+const dotenv = require('dotenv');
+dotenv.config();
 
 // const swaggerDocument = require('./config/swagger.json');
 
 mongoose.Promise = global.Promise;
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
-mongoose.connect(devConfig.databaseUrl)
-.then(() => console.log('db connected'));
+mongoose.connect(process.env.databaseUrl)
+.then(() => console.log(`db connected ${process.env.databaseUrl}`));
 
-const PORT = process.env.PORT || devConfig.port || 3000;
+const PORT = process.env.PORT || 3000;
 
 
 

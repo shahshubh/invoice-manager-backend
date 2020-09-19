@@ -1,16 +1,14 @@
-import { devConfig } from "../env";
-
 const nodemailer = require("nodemailer");
 const htmlToText = require('html-to-text');
 
-export const sendEmail = (options) => {
+exports.sendEmail = (options) => {
     return new Promise((resolve, reject) => {
         const transpoter = nodemailer.createTransport({
-            host: devConfig.ethereal.host,
-            port: devConfig.ethereal.port,
+            host: 'smtp.gmail.com',
+            port: 587,
             auth: {
-                user: devConfig.ethereal.username,
-                pass: devConfig.ethereal.password
+                user: process.env.smtpUsername,
+                pass: process.env.smtpUsername
             }
         });
 

@@ -2,7 +2,6 @@ const httpStatus = require('http-status-codes');
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { devConfig } = require('../env');
 const { getJWTToken } = require('../helpers/util');
 const { sendEmail } = require('../helpers/mail');
 const { use } = require('passport');
@@ -60,7 +59,7 @@ exports.login = async (req,res) => {
         if(!matched){
             return res.status(httpStatus.UNAUTHORIZED).json({ err: 'Email and Password do not match' });
         }
-        const token = jwt.sign({ _id: user._id }, devConfig.jwtSecret);
+        const token = jwt.sign({ _id: user._id }, process.env.jwtSecret);
         // { expiresIn: '1d' }
 
         return res.json({ success: true, token });
@@ -98,7 +97,7 @@ exports.forgotPassword = async (req,res) => {
 
         const resetLink = `
         <h4>Click on the below link to reset the password for your Invoice Manager account. The link will expire in 1 hour.</h4>
-        <a href='${devConfig.frontendUrl}/reset-password/${token}'>Reset Password</a>
+        <a href='${process.env.frontendUrl}/reset-password/${token}'>Reset Password</a>
         `;
         const results = await sendEmail({
             html: resetLink,
