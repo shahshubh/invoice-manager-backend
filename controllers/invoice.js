@@ -7,9 +7,11 @@ exports.findAllInvoices = (req,res) => {
     const options = {
         page: parseInt(page),
         limit: parseInt(perPage),
-        populate: 'client'
+        populate: 'client createdBy'
     };
-    const query = {};
+    const query = {
+        createdBy: req.currentUser._id
+    };
     if(filter){
         query.item = {
             $regex: filter,
@@ -22,29 +24,26 @@ exports.findAllInvoices = (req,res) => {
     }
 
     Invoice.paginate(query, options)
-    .then(data => res.json(data))
+    .then(data => {
+        // console.log(data);
+        return res.json(data);
+    })
     .catch(err => res.status(httpStatus.INTERNAL_SERVER_ERROR).json(err));
 };
 
 
 exports.createInvoice = (req,res) => {
     const { item, qty, date, due, tax, rate, client } = req.body;
-    // const schema = Joi.object().keys({
-    //     item: Joi.string().required(),
-    //     date: Joi.date().required(),
-    //     due: Joi.date().required(),
-    //     qty: Joi.number().integer().required(),
-    //     tax: Joi.number().optional(),
-    //     rate: Joi.number().optional()
-    // });
-
 
     if(!item || !date || !due || !qty || !client || !tax || !rate){
         return res.status(httpStatus.BAD_REQUEST).json({
             err: 'Please fill all the required field'
         });
     }
-    Invoice.create(req.body)
+    let data = req.body;
+    data.createdBy = req.currentUser._id;
+    // console.log(data);
+    Invoice.create(data)
     .then((data) => res.json(data))
     .catch(err => res.status(httpStatus.INTERNAL_SERVER_ERROR).json(err));
 };

@@ -2,12 +2,9 @@
   "name": "invoice-manager-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js --exec babel-node --presets env",
-    "build": "babel src -d dist --source-maps inline --copy-files",
-    "server": "node dist/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
   "author": "shubh",
   "license": "ISC",

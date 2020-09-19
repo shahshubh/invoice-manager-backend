@@ -31,6 +31,11 @@ const InvoiceSchema = new mongoose.Schema({
         ref: 'Client',
         type: mongoose.Schema.Types.ObjectId,
         required: true
+    },
+    createdBy: {
+        ref: 'User',
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
     }
 });
 

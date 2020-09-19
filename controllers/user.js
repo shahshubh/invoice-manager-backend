@@ -97,7 +97,7 @@ exports.forgotPassword = async (req,res) => {
         const token = getJWTToken({ _id: user._id });
 
         const resetLink = `
-        <h4>Click on the below link to reset the password for your Invoice Manager account.</h4>
+        <h4>Click on the below link to reset the password for your Invoice Manager account. The link will expire in 1 hour.</h4>
         <a href='${devConfig.frontendUrl}/reset-password/${token}'>Reset Password</a>
         `;
         const results = await sendEmail({

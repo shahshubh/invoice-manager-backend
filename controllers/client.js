@@ -4,7 +4,7 @@ const Client = require('../models/client');
 
 exports.findAllClients = async (req,res) => {
     try {
-        const allClients = await Client.find();
+        const allClients = await Client.find({ createdBy: req.currentUser._id });
         return res.json(allClients);
     } catch (error) {
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(error);
@@ -26,7 +26,11 @@ exports.createClient = async (req,res) => {
                 err: 'Please enter valid email address.'
             });
         }
-        const newClient = await Client.create(req.body);
+
+        let data = req.body;
+        data.createdBy = req.currentUser._id;
+        
+        const newClient = await Client.create(data);
         return res.json(newClient);
 
     } catch (error) {

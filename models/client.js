@@ -13,6 +13,11 @@ const ClientSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    createdBy: {
+        ref: 'User',
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    }
 
 });
 
