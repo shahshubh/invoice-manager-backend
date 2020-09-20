@@ -96,8 +96,10 @@ exports.forgotPassword = async (req,res) => {
         const token = getJWTToken({ _id: user._id });
 
         const resetLink = `
-        <h4>Click on the below link to reset the password for your Invoice Manager account. The link will expire in 1 hour.</h4>
-        <a href='${process.env.frontendUrl}/reset-password/${token}'>Reset Password</a>
+        <h1>Hello, ${user.email}</h1>
+        <h3>Click on the link to reset the password <a href='${process.env.frontendUrl}/reset-password/${token}'>Reset Password</a> for your Invoice Manager account</h3>
+        <hr />
+        <h4>The link will expire in 1 hour.</h4>
         `;
         const results = await sendEmail({
             html: resetLink,
@@ -120,10 +122,22 @@ exports.resetPassword = async (req, res) => {
                 err: 'Password is required'
             });
         }
+
         const user = await User.findById(req.currentUser._id);
 
         user.password = password;
         await user.save();
+
+        const successMsg = `
+        <h1>Hello, ${user.email}</h1>
+        <br/>
+        <h3>Your password has been successfully changed for your Invoice Manager account. You can now login with your new password <a href='${process.env.frontendUrl}/login'>here</a></h3>
+        `;
+        const results = await sendEmail({
+            html: successMsg,
+            subject: 'Changes to your Invoice Manager Account',
+            email: user.email
+        });
         return res.json({ success: true });
 
 
