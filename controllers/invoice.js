@@ -7,7 +7,10 @@ exports.findAllInvoices = (req,res) => {
     const options = {
         page: parseInt(page),
         limit: parseInt(perPage),
-        populate: 'client createdBy'
+        populate: [
+            'client',
+            { path: 'createdBy', select: '_id email' }
+        ],
     };
     const query = {
         createdBy: req.currentUser._id
